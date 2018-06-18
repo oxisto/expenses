@@ -12,7 +12,8 @@ func NewRouter() *mux.Router {
 	})*/
 
 	router := mux.NewRouter().StrictSlash(true)
-	router.HandleFunc("/expenses", GetExpenses)
+	router.Methods("GET").Path("/api/expenses").HandlerFunc(GetExpenses)
+	router.Methods("POST").Path("/api/expenses").HandlerFunc(PostExpense)
 
 	return router
 }

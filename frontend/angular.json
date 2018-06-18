@@ -45,7 +45,13 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
+              },
+              {
+                "input": "./node_modules/open-iconic/font/css/open-iconic-bootstrap.css"
+              }
             ],
             "scripts": []
           },
@@ -90,7 +96,7 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
+              "src/tsconfig.app.json"
             ],
             "exclude": [
               "**/node_modules/**"

@@ -24,7 +24,7 @@ func (d DebugLogWriter) Write(p []byte) (n int, err error) {
 func JsonResponse(w http.ResponseWriter, r *http.Request, object interface{}, err error) {
 	// uh-uh, we have an error
 	if err != nil {
-		logrus.Error("An error occured during processing of a REST request: %v", err)
+		logrus.Errorf("An error occured during processing of a REST request: %v", err)
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}

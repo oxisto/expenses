@@ -9,25 +9,27 @@ const DefaultCurrency = CurrencyEuro
 
 // Category is a struct to categorize your expenses
 type Category struct {
-	Name     string
-	Icon     string
-	Keywords string
+	Name     string `json:"name"`
+	Icon     string `json:"icon"`
+	Keywords string `json:"keywords"`
 }
 
 // Expense holds all the information about an expense you made
 type Expense struct {
+	// Expense id
+	ID int32 `json:"id"`
+	// Account id
+	AccountID int32 `json:"accountID"`
 	// The amount you spent
-	Amount float64
+	Amount float64 `json:"amount"`
 	// The currency
-	Currency string
+	Currency string `json:"currency"`
 	// Optinal, a comment
-	Comment string
+	Comment string `json:"comment"`
 	// The time of the expense
-	Timestamp time.Time
+	Timestamp time.Time `json:"timestamp"`
 	// The categories
-	Categories []Category
-	// Optional, if you track expenses of more than one person in one account
-	Person string
+	Categories []Category `json:"categories"`
 }
 
 // NewExpense creates a new expense with default values

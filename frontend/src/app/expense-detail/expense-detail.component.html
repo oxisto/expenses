@@ -1,0 +1,17 @@
+<p>
+  New Expense, soon to be also edit and get details
+</p>
+
+<div class="card">
+  <div class="card-header">Expense</div>
+  <div class="card-body">
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="form-group">
+        <input type="number" placeholder="Amount" class="form-control" #username="ngModel" [(ngModel)]="expense.amount" name="amount"
+          required>
+      </div>
+
+      <button class="btn btn-secondary" type="submit" [disabled]="!loginForm.form.valid">Save</button>
+    </form>
+  </div>
+</div>

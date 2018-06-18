@@ -1,0 +1,15 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let expense of expenses">
+      <td>{{ expense.amount | currency: expense.currency }}</td>
+    </tr>
+  </tbody>
+</table>
+<a routerLink="/expenses/new">
+  <span class="oi oi-plus" title="plus" aria-hidden="true"></span>
+</a>

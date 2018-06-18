@@ -1,13 +1,16 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": ".",
+			"name": "Track Expenses"
 		},
 		{
-			"path": "frontend"
+			"path": "frontend",
+			"name": "Frontend"
 		},
 		{
-			"path": "server"
+			"path": "server",
+			"name": "Server"
 		}
 	],
 	"settings": {}
