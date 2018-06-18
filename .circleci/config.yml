@@ -71,13 +71,10 @@ jobs:
           name: Retrieve kubeconfig from ENV
           command: mkdir -p ~/.kube && echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
       - run:
-          name: Install MongoDB and Redis
-          command: ./kubectl apply -f kubernetes/mongodb.yaml -f kubernetes/redis.yaml
-      - run:
           name: Install track-expenses frontend
           command: ./kubectl apply -f kubernetes/frontend.yaml
       - run:
-          name: Install track-expenses Server
+          name: Install track-expenses server
           command: ./kubectl apply -f kubernetes/server.yaml
       - run:
           name: Set image to current build
