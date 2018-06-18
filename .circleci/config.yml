@@ -1,26 +1,12 @@
 version: 2
 jobs:
-  prepare:
-    docker:
-      - image: docker
-    steps:
-      - run:
-          name: Push Docker image
-          command: |
-            TAG=$CIRCLE_BUILD_NUM
-            mkdir -p /tmp/workspace && cd /tmp/workspace && echo ${TAG} > tag.txt
-      - persist_to_workspace:
-          root: /tmp/workspace
-          paths:
-            - tag.txt
   build_server:
     docker:
       - image: docker
     working_directory: /track-expenses
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 17.10.0-ce
+      - setup_remote_docker
       - run:
           name: Build Docker image
           command: |
@@ -28,7 +14,7 @@ jobs:
       - deploy:
           name: Push Docker image
           command: |
-            TAG=$CIRCLE_BUILD_NUM
+            TAG=${CIRCLE_SHA1:0:8}
             DOCKER_HUB_IMAGE=oxisto/track-expenses-server
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker tag track-expenses-server $DOCKER_HUB_IMAGE
@@ -41,8 +27,7 @@ jobs:
     working_directory: /track-expenses
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 17.10.0-ce
+      - setup_remote_docker
       - run:
           name: Build Docker image
           command: |
@@ -50,7 +35,7 @@ jobs:
       - deploy:
           name: Push Docker image
           command: |
-            TAG=$CIRCLE_BUILD_NUM
+            TAG=${CIRCLE_SHA1:0:8}
             DOCKER_HUB_IMAGE=oxisto/track-expenses-frontend
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker tag track-expenses-frontend $DOCKER_HUB_IMAGE
@@ -62,8 +47,6 @@ jobs:
       - image: circleci/python
     steps:
       - checkout
-      - attach_workspace: &attach_workspace
-          at: /tmp/workspace
       - run:
           name: Download kubectl
           command: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl
@@ -79,7 +62,7 @@ jobs:
       - run:
           name: Set image to current build
           command: |
-            export TAG="$(cat /tmp/workspace/tag.txt)"
+            TAG=${CIRCLE_SHA1:0:8}
             ./kubectl set image deployment frontend frontend=oxisto/track-expenses-frontend:$TAG -n track-expenses
             ./kubectl set image deployment server server=oxisto/track-expenses-server:$TAG -n track-expenses
 workflows:
