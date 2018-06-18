@@ -26,7 +26,7 @@ export class ExpenseDetailComponent implements OnInit {
       if (id === 'new') {
         this.new = true;
 
-        this.expense = new Expense(0);
+        this.expense = new Expense(1, 1);
       }
     });
   }

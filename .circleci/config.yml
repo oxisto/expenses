@@ -1,0 +1,103 @@
+version: 2
+jobs:
+  prepare:
+    docker:
+      - image: docker
+    steps:
+      - run:
+          name: Push Docker image
+          command: |
+            TAG=$CIRCLE_BUILD_NUM
+            mkdir -p /tmp/workspace && cd /tmp/workspace && echo ${TAG} > tag.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - tag.txt
+  build_server:
+    docker:
+      - image: docker
+    working_directory: /track-expenses
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.10.0-ce
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t track-expenses-server server
+      - deploy:
+          name: Push Docker image
+          command: |
+            TAG=$CIRCLE_BUILD_NUM
+            DOCKER_HUB_IMAGE=oxisto/track-expenses-server
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker tag track-expenses-server $DOCKER_HUB_IMAGE
+            docker tag track-expenses-server $DOCKER_HUB_IMAGE:$TAG
+            docker push $DOCKER_HUB_IMAGE:$TAG
+            docker push $DOCKER_HUB_IMAGE
+  build_frontend:
+    docker:
+      - image: docker
+    working_directory: /track-expenses
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 17.10.0-ce
+      - run:
+          name: Build Docker image
+          command: |
+            docker build -t track-expenses-frontend frontend
+      - deploy:
+          name: Push Docker image
+          command: |
+            TAG=$CIRCLE_BUILD_NUM
+            DOCKER_HUB_IMAGE=oxisto/track-expenses-frontend
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+            docker tag track-expenses-frontend $DOCKER_HUB_IMAGE
+            docker tag track-expenses-frontend $DOCKER_HUB_IMAGE:$TAG
+            docker push $DOCKER_HUB_IMAGE:$TAG
+            docker push $DOCKER_HUB_IMAGE
+  deploy_kubernetes:
+    docker:
+      - image: circleci/python
+    steps:
+      - checkout
+      - attach_workspace: &attach_workspace
+          at: /tmp/workspace
+      - run:
+          name: Download kubectl
+          command: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl
+      - run:
+          name: Retrieve kubeconfig from ENV
+          command: mkdir -p ~/.kube && echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
+      - run:
+          name: Install MongoDB and Redis
+          command: ./kubectl apply -f kubernetes/mongodb.yaml -f kubernetes/redis.yaml
+      - run:
+          name: Install track-expenses frontend
+          command: ./kubectl apply -f kubernetes/frontend.yaml
+      - run:
+          name: Install track-expenses Server
+          command: ./kubectl apply -f kubernetes/server.yaml
+      - run:
+          name: Set image to current build
+          command: |
+            export TAG="$(cat /tmp/workspace/tag.txt)"
+            ./kubectl set image deployment frontend frontend=oxisto/track-expenses-frontend:$TAG -n track-expenses
+            ./kubectl set image deployment server server=oxisto/track-expenses-server:$TAG -n track-expenses
+workflows:
+  version: 2
+  build-test-and-deploy:
+    jobs:
+      - prepare:
+          context: org-global
+      - build_frontend:
+          context: org-global
+      - build_server:
+          context: org-global
+      - deploy_kubernetes:
+          context: org-global
+          requires:
+            - prepare
+            - build_frontend
+            - build_server
