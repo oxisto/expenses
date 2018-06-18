@@ -22,6 +22,8 @@ spec:
         ports:
         - containerPort: 4300
           protocol: TCP
+      - image: mongo
+        name: mongo
       imagePullSecrets:
       - name: registry-secret
 ---

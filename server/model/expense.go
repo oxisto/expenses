@@ -17,9 +17,9 @@ type Category struct {
 // Expense holds all the information about an expense you made
 type Expense struct {
 	// Expense id
-	ID int32 `json:"id"`
+	ID string `json:"id" bson:"_id"`
 	// Account id
-	AccountID int32 `json:"accountID"`
+	AccountID int32 `json:"accountID" bson:"accountID"`
 	// The amount you spent
 	Amount float64 `json:"amount"`
 	// The currency
