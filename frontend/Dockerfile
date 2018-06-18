@@ -13,6 +13,6 @@ RUN yarn run build --configuration=production
 FROM nginx:alpine
 
 WORKDIR /usr/share/nginx/html
-COPY --from=build /usr/track-expenses/dist /usr/share/nginx/html/
+COPY --from=build /usr/track-expenses/dist/frontend/ /usr/share/nginx/html/
 
 EXPOSE 80
