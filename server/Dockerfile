@@ -1,6 +1,6 @@
 FROM golang AS build
 
-WORKDIR /go/src/github.com/oxisto/track-expenses
+WORKDIR /go/src/github.com/oxisto/track-expenses/server
 
 # install dep utility
 RUN go get -u github.com/golang/dep/cmd/dep
