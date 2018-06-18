@@ -16,8 +16,7 @@ spec:
         app: frontend
     spec:
       containers:
-      - env:
-        image: oxisto/track-expenses-frontend
+      - image: oxisto/track-expenses-frontend
         imagePullPolicy: Always
         name: frontend
         ports:

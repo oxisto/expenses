@@ -16,7 +16,7 @@ spec:
         app: server
     spec:
       containers:
-        image: oxisto/track-expenses-server
+      - image: oxisto/track-expenses-server
         imagePullPolicy: Always
         name: server
         ports:
