@@ -42,6 +42,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: expenses
+  annotations:
+    kubernetes.io/tls-acme: "true"  
 spec:
   rules:
   - host: expenses.aybaze.com
