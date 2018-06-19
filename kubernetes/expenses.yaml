@@ -2,55 +2,54 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    app: frontend
-  name: frontend
-  namespace: track-expenses
+    app: expenses
+  name: expenses
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: frontend
+      app: expenses
   template:
     metadata:
       labels:
-        app: frontend
+        app: expenses
     spec:
       containers:
-      - image: oxisto/track-expenses-frontend
+      - image: oxisto/expenses
         imagePullPolicy: Always
-        name: frontend
+        name: expenses
         ports:
-        - containerPort: 80
+        - containerPort: 8080
           protocol: TCP
+      - image: mongo
+        name: mongo
       imagePullSecrets:
       - name: registry-secret
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
-  namespace: track-expenses
+  name: expenses
 spec:
   ports:
-  - port: 80
+  - port: 8080
     protocol: TCP
-    targetPort: 80
+    targetPort: 8080
   selector:
-    app: frontend
+    app: server
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: frontend
-  namespace: track-expenses
+  name: expenses
 spec:
   rules:
   - host: expenses.aybaze.com
     http:
       paths:
       - backend:
-          serviceName: frontend
-          servicePort: 80
+          serviceName: server
+          servicePort: 8080
         path: /
   tls:
   - hosts:

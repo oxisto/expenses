@@ -6,7 +6,7 @@ import (
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"github.com/oxisto/track-expenses/server/model"
+	"github.com/oxisto/track-expenses/model"
 	"github.com/sirupsen/logrus"
 )
 

@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/oxisto/track-expenses/server/common"
-	"github.com/oxisto/track-expenses/server/db"
-	"github.com/oxisto/track-expenses/server/model"
+	"github.com/oxisto/track-expenses/common"
+	"github.com/oxisto/track-expenses/db"
+	"github.com/oxisto/track-expenses/model"
 )
 
 // GetExpenses handles a GET request to the /expenses endpoint

@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/handlers"
-	"github.com/oxisto/track-expenses/server/common"
-	"github.com/oxisto/track-expenses/server/routes"
+	"github.com/oxisto/track-expenses/common"
+	"github.com/oxisto/track-expenses/routes"
 	"github.com/sirupsen/logrus"
 )
 
@@ -23,7 +23,7 @@ func main() {
 	log.Info("Starting server...")
 
 	router := handlers.LoggingHandler(&common.DebugLogWriter{Component: "http"}, routes.NewRouter())
-	err := http.ListenAndServe("0.0.0.0:4300", router)
+	err := http.ListenAndServe("0.0.0.0:8080", router)
 
 	log.Errorf("An error occured: %v", err)
 }

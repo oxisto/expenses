@@ -1,45 +1,24 @@
 version: 2
 jobs:
-  build_server:
+  build:
     docker:
       - image: docker
-    working_directory: /track-expenses
+    working_directory: /expenses
     steps:
       - checkout
       - setup_remote_docker
       - run:
           name: Build Docker image
           command: |
-            docker build -t track-expenses-server server
+            docker build -t expenses .
       - deploy:
           name: Push Docker image
           command: |
             TAG=${CIRCLE_SHA1:0:8}
-            DOCKER_HUB_IMAGE=oxisto/track-expenses-server
+            DOCKER_HUB_IMAGE=oxisto/expenses
             docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker tag track-expenses-server $DOCKER_HUB_IMAGE
-            docker tag track-expenses-server $DOCKER_HUB_IMAGE:$TAG
-            docker push $DOCKER_HUB_IMAGE:$TAG
-            docker push $DOCKER_HUB_IMAGE
-  build_frontend:
-    docker:
-      - image: docker
-    working_directory: /track-expenses
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run:
-          name: Build Docker image
-          command: |
-            docker build -t track-expenses-frontend frontend
-      - deploy:
-          name: Push Docker image
-          command: |
-            TAG=${CIRCLE_SHA1:0:8}
-            DOCKER_HUB_IMAGE=oxisto/track-expenses-frontend
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker tag track-expenses-frontend $DOCKER_HUB_IMAGE
-            docker tag track-expenses-frontend $DOCKER_HUB_IMAGE:$TAG
+            docker tag expenses $DOCKER_HUB_IMAGE
+            docker tag expenses $DOCKER_HUB_IMAGE:$TAG
             docker push $DOCKER_HUB_IMAGE:$TAG
             docker push $DOCKER_HUB_IMAGE
   deploy_kubernetes:
@@ -54,27 +33,20 @@ jobs:
           name: Retrieve kubeconfig from ENV
           command: mkdir -p ~/.kube && echo $KUBECONFIG_BASE64 | base64 -d > ~/.kube/config
       - run:
-          name: Install track-expenses frontend
-          command: ./kubectl apply -f kubernetes/frontend.yaml
-      - run:
-          name: Install track-expenses server
-          command: ./kubectl apply -f kubernetes/server.yaml
+          name: Install expenses
+          command: ./kubectl apply -f kubernetes/expenses.yaml
       - run:
           name: Set image to current build
           command: |
             TAG=${CIRCLE_SHA1:0:8}
-            ./kubectl set image deployment frontend frontend=oxisto/track-expenses-frontend:$TAG -n track-expenses
-            ./kubectl set image deployment server server=oxisto/track-expenses-server:$TAG -n track-expenses
+            ./kubectl set image deployment expenses expenses=oxisto/expenses:$TAG
 workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - build_frontend:
-          context: org-global
-      - build_server:
+      - build:
           context: org-global
       - deploy_kubernetes:
           context: org-global
           requires:
-            - build_frontend
-            - build_server
+            - build

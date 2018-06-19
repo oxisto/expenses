@@ -1,6 +1,18 @@
-FROM golang AS build
+FROM node:alpine AS build-frontend
 
-WORKDIR /go/src/github.com/oxisto/track-expenses/server
+WORKDIR /tmp
+
+ADD frontend/*.json ./
+ADD frontend/*.lock ./
+RUN yarn install
+
+ADD frontend/. .
+RUN yarn run lint
+RUN yarn run build --configuration=production
+
+FROM golang AS build-server
+
+WORKDIR /go/src/github.com/oxisto/track-expenses
 
 # install dep utility
 RUN go get -u github.com/golang/dep/cmd/dep
@@ -19,6 +31,7 @@ FROM alpine:latest
 # update CA certificates
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /usr/track-expenses
-COPY --from=build /go/src/github.com/oxisto/track-expenses/server .
+WORKDIR /usr/share/track-expenses
+COPY --from=build-frontend /tmp/dist ./frontend/dist
+COPY --from=build-server /go/src/github.com/oxisto/track-expenses/server .
 CMD ["./server"]

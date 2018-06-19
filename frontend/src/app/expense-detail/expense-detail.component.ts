@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Expense } from '../expense';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
-import { of, empty } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
