@@ -48,7 +48,7 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: server
+          serviceName: expenses
           servicePort: 8080
         path: /
   tls:
