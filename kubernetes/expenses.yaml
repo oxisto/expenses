@@ -23,6 +23,14 @@ spec:
           protocol: TCP
       - image: mongo
         name: mongo
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-data
+      volumes:
+      - name: mongo-data
+        hostPath:
+          path: /srv/k8s/mongo
+          type: Directory
       imagePullSecrets:
       - name: registry-secret
 ---
