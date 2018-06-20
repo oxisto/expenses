@@ -2,7 +2,9 @@
 	"folders": [
 		{
 			"path": ".",
-			"name": "Track Expenses"
+		},
+		{
+			"path": "frontend",
 		}
 	],
 	"settings": {}

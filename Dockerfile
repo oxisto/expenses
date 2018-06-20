@@ -12,7 +12,7 @@ RUN yarn run build --configuration=production
 
 FROM golang AS build-server
 
-WORKDIR /go/src/github.com/oxisto/track-expenses
+WORKDIR /go/src/github.com/oxisto/expenses
 
 # install dep utility
 RUN go get -u github.com/golang/dep/cmd/dep
@@ -31,7 +31,7 @@ FROM alpine:latest
 # update CA certificates
 RUN apk --no-cache add ca-certificates
 
-WORKDIR /usr/share/track-expenses
+WORKDIR /usr/share/expenses
 COPY --from=build-frontend /tmp/dist ./frontend/dist
-COPY --from=build-server /go/src/github.com/oxisto/track-expenses/server .
+COPY --from=build-server /go/src/github.com/oxisto/expenses/server .
 CMD ["./server"]

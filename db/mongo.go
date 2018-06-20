@@ -6,7 +6,7 @@ import (
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"github.com/oxisto/track-expenses/model"
+	"github.com/oxisto/expenses/model"
 	"github.com/sirupsen/logrus"
 )
 
@@ -21,12 +21,14 @@ func init() {
 	mongoAddr := "localhost:27017"
 	log = logrus.WithField("component", "db")
 
+	log.Infof("Connecting to MongoDB @ %s...", mongoAddr)
+
 	session, err := mgo.Dial(mongoAddr)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	mongo = session.DB("track-expenses")
+	mongo = session.DB("expenses")
 }
 
 // FindExpenses returns an array of all expenses
