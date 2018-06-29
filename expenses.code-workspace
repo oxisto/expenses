@@ -14,7 +14,8 @@
 		"recommendations": [
 			"eg2.tslint",
 			"ms-vscode.go",
-			"msjsdiag.debugger-for-chrome"
+			"msjsdiag.debugger-for-chrome",
+			"peterjausovec.vscode-docker"
 		]
 	}
 }

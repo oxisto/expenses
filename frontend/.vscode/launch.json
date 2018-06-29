@@ -4,9 +4,9 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome",
+            "name": "Debug with Chrome",
             "url": "http://localhost:4200",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
         },
     ],
     "compounds": []

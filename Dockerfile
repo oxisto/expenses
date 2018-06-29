@@ -8,7 +8,7 @@ RUN yarn install
 
 ADD frontend/. .
 RUN yarn run lint
-RUN yarn run build --configuration=production
+RUN yarn run build --prod
 
 FROM golang AS build-server
 
