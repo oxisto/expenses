@@ -1,15 +1,23 @@
 package common
 
 import (
+	"crypto/rand"
+	"crypto/rsa"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+var key *rsa.PrivateKey
+
+func init() {
+	// TODO: support loading the key from a file or Kubernetes secret
+	key, _ = rsa.GenerateKey(rand.Reader, 4048)
+}
+
 // IssueToken issues a JWT token for use of the API
 func IssueToken(ID string) (token string, err error) {
-	key := []byte(JwtSecretKey)
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, &APIClaims{
+	claims := jwt.NewWithClaims(jwt.SigningMethodRS512, &APIClaims{
 		&jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 24 * 30).Unix(),
 		},
@@ -19,11 +27,6 @@ func IssueToken(ID string) (token string, err error) {
 	token, err = claims.SignedString(key)
 	return
 }
-
-// TODO: generate this somehow or retrieve it from something
-const (
-	JwtSecretKey = "changeme"
-)
 
 type APIClaims struct {
 	*jwt.StandardClaims
