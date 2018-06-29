@@ -2,11 +2,13 @@
   <thead>
     <tr>
       <th scope="col">Amount</th>
+      <th scope="col">Account</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let expense of expenses">
       <td><a [routerLink]="['/expenses', expense.id]">{{ expense.amount | currency: expense.currency }}</a></td>
+      <td>{{ expense.accountID }}</td>
     </tr>
   </tbody>
 </table>
