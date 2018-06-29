@@ -1,4 +1,4 @@
-package model
+package db
 
 import (
 	"time"
@@ -38,7 +38,7 @@ func (e Expense) Collection() string {
 	return ExpensesCollectionName
 }
 
-func (e Expense) Identifer() string {
+func (e Expense) Identifier() string {
 	return e.ID
 }
 
@@ -48,12 +48,13 @@ type DBObject interface {
 	Collection() string
 
 	// The id of the object
-	Identifer() string
+	Identifier() string
 }
 
 // NewExpense creates a new expense with default values
 func NewExpense() Expense {
 	return Expense{
+		ID:        NextID(),
 		Timestamp: time.Now(),
 		Currency:  CurrencyEuro,
 	}

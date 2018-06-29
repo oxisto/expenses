@@ -6,7 +6,6 @@ import (
 
 	"github.com/globalsign/mgo"
 	"github.com/globalsign/mgo/bson"
-	"github.com/oxisto/expenses/model"
 	"github.com/sirupsen/logrus"
 )
 
@@ -38,8 +37,8 @@ func init() {
 
 // FindExpenses returns an array of all expenses
 // TODO: should only return expenses of a particular account, or all accounts someone has access to
-func FindExpenses(collection string) (expenses []model.Expense, err error) {
-	expenses = []model.Expense{}
+func FindExpenses(collection string) (expenses []Expense, err error) {
+	expenses = []Expense{}
 
 	err = mongo.C(collection).Find(bson.M{}).All(&expenses)
 
@@ -47,20 +46,27 @@ func FindExpenses(collection string) (expenses []model.Expense, err error) {
 }
 
 // Find returns an object given an ID
-func Find(ID string, object model.DBObject) (err error) {
+func FindID(ID string, object DBObject) (err error) {
 	err = mongo.C(object.Collection()).FindId(ID).One(object)
 
 	return
 }
 
+// Find returns an object given a query
+func Find(query bson.M, object DBObject) (err error) {
+	err = mongo.C(object.Collection()).Find(query).One(object)
+
+	return
+}
+
 // Insert inserts one object into the database
-func Insert(object model.DBObject) (err error) {
+func Insert(object DBObject) (err error) {
 	return mongo.C(object.Collection()).Insert(&object)
 }
 
 // Upsert inserts or updates the given expense
-func Upsert(object model.DBObject) (err error) {
-	_, err = mongo.C(object.Collection()).Upsert(bson.M{"_id": object.Identifer()}, object)
+func Upsert(object DBObject) (err error) {
+	_, err = mongo.C(object.Collection()).Upsert(bson.M{"_id": object.Identifier()}, object)
 
 	return err
 }

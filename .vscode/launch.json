@@ -8,6 +8,14 @@
             "mode": "debug",
             "program": "${workspaceFolder}/cmd/server/server.go",
             "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch useradd",
+            "type": "go",
+            "request": "launch",
+            "mode": "debug",
+            "program": "${workspaceFolder}/cmd/useradd/useradd.go",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

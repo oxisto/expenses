@@ -7,7 +7,6 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/oxisto/expenses/common"
 	"github.com/oxisto/expenses/db"
-	"github.com/oxisto/expenses/model"
 )
 
 // GetExpense retrieves a single expense
@@ -22,8 +21,8 @@ func GetExpense(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var expense model.Expense
-	err := db.Find(expenseID, &expense)
+	var expense db.Expense
+	err := db.FindID(expenseID, &expense)
 
 	if err == db.ErrNotFound {
 		common.JsonResponse(w, r, nil, nil)
@@ -34,7 +33,7 @@ func GetExpense(w http.ResponseWriter, r *http.Request) {
 
 // GetExpenses handles a GET request to the /expenses endpoint
 func GetExpenses(w http.ResponseWriter, r *http.Request) {
-	expenses, err := db.FindExpenses(model.ExpensesCollectionName)
+	expenses, err := db.FindExpenses(db.ExpensesCollectionName)
 
 	common.JsonResponse(w, r, expenses, err)
 }
@@ -44,7 +43,7 @@ func PostExpense(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 
 	var (
-		expense model.Expense
+		expense db.Expense
 		err     error
 	)
 	if err = decoder.Decode(&expense); err != nil {
@@ -67,7 +66,7 @@ func PutExpense(w http.ResponseWriter, r *http.Request) {
 	decoder := json.NewDecoder(r.Body)
 
 	var (
-		expense   model.Expense
+		expense   db.Expense
 		expenseID string
 		ok        bool
 		err       error
