@@ -16,10 +16,10 @@ export class ExpenseDetailComponent implements OnInit {
   new = false;
   submitted: boolean;
 
-  constructor(private route: ActivatedRoute, 
-              private router: Router, 
-              private http: HttpClient,
-              private expenseService: ExpenseService) { }
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
+    private expenseService: ExpenseService) { }
 
   ngOnInit() {
     this.route.paramMap.forEach((params: ParamMap) => {
@@ -28,7 +28,7 @@ export class ExpenseDetailComponent implements OnInit {
       if (id === 'new') {
         this.new = true;
 
-        this.expense = new Expense(null, 1, "1");
+        this.expense = new Expense(null, 1, '1');
       } else {
         this.expenseService.getExpense(id).subscribe(expense => {
           this.expense = expense;
@@ -40,9 +40,9 @@ export class ExpenseDetailComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    var obs;
+    let obs;
 
-    if(this.expense.id == null) {
+    if (this.expense.id == null) {
       obs = this.expenseService.postExpense(this.expense);
     } else {
       obs = this.expenseService.putExpense(this.expense);

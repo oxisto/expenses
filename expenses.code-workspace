@@ -7,5 +7,14 @@
 			"path": "frontend",
 		}
 	],
-	"settings": {}
+	"settings": {
+		"editor.formatOnSave": true
+	},
+	"extensions": {
+		"recommendations": [
+			"eg2.tslint",
+			"ms-vscode.go",
+			"msjsdiag.debugger-for-chrome"
+		]
+	}
 }
