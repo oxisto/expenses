@@ -8,6 +8,12 @@
   version = "v1.1.0"
 
 [[projects]]
+  name = "github.com/dgrijalva/jwt-go"
+  packages = ["."]
+  revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
+  version = "v3.2.0"
+
+[[projects]]
   branch = "master"
   name = "github.com/globalsign/mgo"
   packages = [
@@ -77,6 +83,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "113824cdccfbb5898e258105f7694d8345a21548c58eab2bbc898dea18b305f1"
+  inputs-digest = "b7b96de0a1a61ae323d6002e6acfe4a0da5e4459c9da8baca27412936507faa6"
   solver-name = "gps-cdcl"
   solver-version = 1
