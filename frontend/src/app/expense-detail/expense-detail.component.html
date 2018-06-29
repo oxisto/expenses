@@ -2,7 +2,7 @@
   New Expense, soon to be also edit and get details
 </p>
 
-<div class="card">
+<div class="card" *ngIf="expense">
   <div class="card-header">Expense</div>
   <div class="card-body">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">

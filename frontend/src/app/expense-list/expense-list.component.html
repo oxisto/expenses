@@ -6,7 +6,7 @@
   </thead>
   <tbody>
     <tr *ngFor="let expense of expenses">
-      <td>{{ expense.amount | currency: expense.currency }}</td>
+      <td><a [routerLink]="['/expenses', expense.id]">{{ expense.amount | currency: expense.currency }}</a></td>
     </tr>
   </tbody>
 </table>

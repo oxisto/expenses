@@ -14,12 +14,14 @@ type Category struct {
 	Keywords string `json:"keywords"`
 }
 
+const ExpensesCollectionName = "expenses"
+
 // Expense holds all the information about an expense you made
 type Expense struct {
 	// Expense id
 	ID string `json:"id" bson:"_id"`
 	// Account id
-	AccountID int32 `json:"accountID" bson:"accountID"`
+	AccountID string `json:"accountID" bson:"accountID"`
 	// The amount you spent
 	Amount float64 `json:"amount"`
 	// The currency
@@ -30,6 +32,23 @@ type Expense struct {
 	Timestamp time.Time `json:"timestamp"`
 	// The categories
 	Categories []Category `json:"categories"`
+}
+
+func (e Expense) Collection() string {
+	return ExpensesCollectionName
+}
+
+func (e Expense) Identifer() string {
+	return e.ID
+}
+
+// DBObject represents objects that can be stored in a database
+type DBObject interface {
+	// The name of the db collection
+	Collection() string
+
+	// The id of the object
+	Identifer() string
 }
 
 // NewExpense creates a new expense with default values

@@ -3,6 +3,7 @@ import { Expense } from '../expense';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
+import { ExpenseService } from '../expense.service';
 
 @Component({
   selector: 'app-expense-detail',
@@ -15,7 +16,10 @@ export class ExpenseDetailComponent implements OnInit {
   new = false;
   submitted: boolean;
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
+  constructor(private route: ActivatedRoute, 
+              private router: Router, 
+              private http: HttpClient,
+              private expenseService: ExpenseService) { }
 
   ngOnInit() {
     this.route.paramMap.forEach((params: ParamMap) => {
@@ -24,7 +28,11 @@ export class ExpenseDetailComponent implements OnInit {
       if (id === 'new') {
         this.new = true;
 
-        this.expense = new Expense(1, 1);
+        this.expense = new Expense(null, 1, "1");
+      } else {
+        this.expenseService.getExpense(id).subscribe(expense => {
+          this.expense = expense;
+        });
       }
     });
   }
@@ -32,10 +40,17 @@ export class ExpenseDetailComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    this.http.post('/api/expenses', this.expense)
-      .subscribe(() => {
-        this.router.navigateByUrl('/');
-      });
+    var obs;
+
+    if(this.expense.id == null) {
+      obs = this.expenseService.postExpense(this.expense);
+    } else {
+      obs = this.expenseService.putExpense(this.expense);
+    }
+
+    obs.subscribe(() => {
+      this.router.navigateByUrl('/');
+    });
   }
 
 }

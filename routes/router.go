@@ -16,7 +16,9 @@ func NewRouter() *mux.Router {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.Methods("GET").Path("/api/expenses").HandlerFunc(GetExpenses)
+	router.Methods("GET").Path("/api/expenses/{expenseID}").HandlerFunc(GetExpense)
 	router.Methods("POST").Path("/api/expenses").HandlerFunc(PostExpense)
+	router.Methods("PUT").Path("/api/expenses/{expenseID}").HandlerFunc(PutExpense)
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist/frontend")))
 
 	return router

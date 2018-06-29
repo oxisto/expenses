@@ -10,9 +10,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var log *logrus.Entry
-var mongo *mgo.Database
-var rnd *rand.Rand
+var (
+	log   *logrus.Entry
+	mongo *mgo.Database
+	rnd   *rand.Rand
+)
+
+// ErrNotFound indicates that an object was not found in the database
+var ErrNotFound = mgo.ErrNotFound
 
 func init() {
 	// create a new seed
@@ -33,15 +38,31 @@ func init() {
 
 // FindExpenses returns an array of all expenses
 // TODO: should only return expenses of a particular account, or all accounts someone has access to
-func FindExpenses() (expenses []model.Expense, err error) {
-	err = mongo.C("expenses").Find(bson.M{}).All(&expenses)
+func FindExpenses(collection string) (expenses []model.Expense, err error) {
+	expenses = []model.Expense{}
 
-	return expenses, err
+	err = mongo.C(collection).Find(bson.M{}).All(&expenses)
+
+	return
 }
 
-// InsertExpense inserts one expense into the database
-func InsertExpense(expense model.Expense) (err error) {
-	return mongo.C("expenses").Insert(&expense)
+// Find returns an object given an ID
+func Find(ID string, object model.DBObject) (err error) {
+	err = mongo.C(object.Collection()).FindId(ID).One(object)
+
+	return
+}
+
+// Insert inserts one object into the database
+func Insert(object model.DBObject) (err error) {
+	return mongo.C(object.Collection()).Insert(&object)
+}
+
+// Upsert inserts or updates the given expense
+func Upsert(object model.DBObject) (err error) {
+	_, err = mongo.C(object.Collection()).Upsert(bson.M{"_id": object.Identifer()}, object)
+
+	return err
 }
 
 // NextID generates a new random 4-byte ID
