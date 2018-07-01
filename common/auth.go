@@ -1,27 +1,41 @@
 package common
 
 import (
+	"crypto/ecdsa"
+	"crypto/elliptic"
 	"crypto/rand"
-	"crypto/rsa"
 	"time"
 
-	jwt "github.com/dgrijalva/jwt-go"
+	"github.com/auth0/go-jwt-middleware"
+	"github.com/dgrijalva/jwt-go"
+
+	"github.com/oxisto/expenses/db"
 )
 
-var key *rsa.PrivateKey
+var key *ecdsa.PrivateKey
 
 func init() {
 	// TODO: support loading the key from a file or Kubernetes secret
-	key, _ = rsa.GenerateKey(rand.Reader, 4048)
+	key, _ = ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+}
+
+func CreateMiddleware() *jwtmiddleware.JWTMiddleware {
+	return jwtmiddleware.New(jwtmiddleware.Options{
+		ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
+			return &key.PublicKey, nil
+		},
+		UserProperty:  "auth",
+		SigningMethod: jwt.SigningMethodES256,
+	})
 }
 
 // IssueToken issues a JWT token for use of the API
-func IssueToken(ID string) (token string, err error) {
-	claims := jwt.NewWithClaims(jwt.SigningMethodRS512, &APIClaims{
+func IssueToken(user db.User) (token string, err error) {
+	claims := jwt.NewWithClaims(jwt.SigningMethodES256, &APIClaims{
 		&jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 24 * 30).Unix(),
 		},
-		ID,
+		user,
 	})
 
 	token, err = claims.SignedString(key)
@@ -30,5 +44,5 @@ func IssueToken(ID string) (token string, err error) {
 
 type APIClaims struct {
 	*jwt.StandardClaims
-	UserID string
+	User db.User `json:"user"`
 }

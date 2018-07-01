@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-import { ExpenseListComponent } from './expense-list/expense-list.component';
-import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
+import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth.guard';
+import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
+import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [

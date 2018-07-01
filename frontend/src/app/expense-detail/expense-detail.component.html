@@ -14,8 +14,7 @@
 
       <div class="form-group">
         <select class="form-control" #accountID="ngModel" [(ngModel)]="expense.accountID" name="accountID">
-          <option value="1">Christian</option>
-          <option value="2" selected>Vroni</option>
+          <option value="{{ user.id }}" *ngFor="let user of users" selected>{{ user.username }}</option>
         </select>
       </div>
 

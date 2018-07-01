@@ -1,10 +1,11 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginRequest } from './login-request';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { EMPTY, Observable, ObservableInput } from 'rxjs';
+import { LoginRequest } from './login-request';
 import { TokenResponse } from './token-response';
+import { User } from './user';
 
 const helper = new JwtHelperService();
 
@@ -25,6 +26,14 @@ export class AuthService {
     }*/
   }
 
+  handleHttpError(err: HttpErrorResponse): ObservableInput<any> {
+    if (err.status === 401) {
+      this.logout();
+    }
+
+    return EMPTY;
+  }
+
   requestToken(request: LoginRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>('/auth/login', request);
   }
@@ -35,6 +44,12 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('token');
+  }
+
+  getUser(): User {
+    const token = localStorage.getItem('token');
+
+    return helper.decodeToken(token).user;
   }
 
   isLoggedIn() {

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { Expense } from '../expense';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-
-import { HttpClient } from '@angular/common/http';
 import { ExpenseService } from '../expense.service';
+import { User } from '../user';
+
 
 @Component({
   selector: 'app-expense-detail',
@@ -16,19 +17,28 @@ export class ExpenseDetailComponent implements OnInit {
   new = false;
   submitted: boolean;
 
+  users: User[] = [];
+
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient,
+    private authService: AuthService,
     private expenseService: ExpenseService) { }
 
   ngOnInit() {
+    // for now, only push the current user, in the future, we want to support
+    // access to multiple accounts
+    const user = this.authService.getUser();
+
+    this.users.push(user);
+
     this.route.paramMap.forEach((params: ParamMap) => {
       const id = params.get('id');
 
       if (id === 'new') {
         this.new = true;
 
-        this.expense = new Expense(null, 1, '1');
+        // set the account owner as default
+        this.expense = new Expense(null, 1, user.id);
       } else {
         this.expenseService.getExpense(id).subscribe(expense => {
           this.expense = expense;

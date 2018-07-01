@@ -36,11 +36,18 @@ func init() {
 }
 
 // FindExpenses returns an array of all expenses
-// TODO: should only return expenses of a particular account, or all accounts someone has access to
-func FindExpenses(collection string) (expenses []Expense, err error) {
+func FindExpenses(user User, collection string) (expenses []Expense, err error) {
 	expenses = []Expense{}
 
-	err = mongo.C(collection).Find(bson.M{}).All(&expenses)
+	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
+	err = mongo.C(collection).Find(bson.M{"accountID": user.ID}).All(&expenses)
+
+	return
+}
+
+func FindExpense(user User, ID string) (expense Expense, err error) {
+	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
+	err = mongo.C(expense.Collection()).Find(bson.M{"_id": ID, "accountID": user.ID}).One(&expense)
 
 	return
 }

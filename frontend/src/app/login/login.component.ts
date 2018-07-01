@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginRequest } from '../login-request';
-import { AuthService } from '../auth.service';
-import { catchError } from 'rxjs/operators';
-import { empty } from 'rxjs';
-import { TokenResponse } from '../token-response';
 import { Router } from '@angular/router';
+import { EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { AuthService } from '../auth.service';
+import { LoginRequest } from '../login-request';
+import { TokenResponse } from '../token-response';
 
 @Component({
   selector: 'app-login',
@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
     this.authService.requestToken(this.request).pipe(catchError(err => {
       // TODO: display error somehow
       console.log(err);
-      return empty();
+
+      return EMPTY;
     })).subscribe(((response: TokenResponse) => {
       this.authService.login(response.token);
       this.router.navigate(['/']);

@@ -33,12 +33,12 @@ func main() {
 	)
 
 	if username, password, err = GetCredentials(); err != nil {
-		log.Errorf("An error occured %s", err)
+		fmt.Errorf("An error occured %s", err)
 		return
 	}
 
 	if hash, err = bcrypt.GenerateFromPassword([]byte(password), 10); err != nil {
-		log.Errorf("An error occured %s", err)
+		fmt.Errorf("An error occured %s", err)
 		return
 	}
 

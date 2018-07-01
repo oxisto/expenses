@@ -54,7 +54,10 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	token, err = common.IssueToken(user.ID)
+	// make sure, to remove the hash before issuing the ticket
+	user.PasswordHash = ""
+
+	token, err = common.IssueToken(user)
 
 	resp := TokenResponse{Token: token}
 
