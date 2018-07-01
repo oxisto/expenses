@@ -1,3 +1,4 @@
-<a routerLink="/expenses">List of Expenses</a> | List of Categories
+<a routerLink="/expenses">List of Expenses</a> | List of Categories |
+<a href="#" (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
 
 <router-outlet></router-outlet>

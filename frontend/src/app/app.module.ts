@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExpenseListComponent,
-    ExpenseDetailComponent
+    ExpenseDetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
