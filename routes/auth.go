@@ -12,8 +12,12 @@ import (
 )
 
 type LoginRequest struct {
-	Username string
-	Password string
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+type TokenResponse struct {
+	Token string `json:"token"`
 }
 
 // Login handles a login request
@@ -52,10 +56,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	token, err = common.IssueToken(user.ID)
 
+	resp := TokenResponse{Token: token}
+
 	// redirect to main dashboard page
-	w.Header().Add("Location", "/#?token="+token)
+	//w.Header().Add("Location", "/#?token="+token)
 	w.Header().Add("Set-Cookie", "token="+token+"; Path=/")
-	w.WriteHeader(http.StatusFound)
+	//w.WriteHeader(http.StatusFound)
+
+	common.JsonResponse(w, r, resp, err)
 
 	defer r.Body.Close()
 
