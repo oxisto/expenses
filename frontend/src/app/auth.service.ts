@@ -7,6 +7,10 @@ import { LoginRequest } from './login-request';
 import { TokenResponse } from './token-response';
 import { User } from './user';
 
+export function getToken() {
+  return localStorage.getItem('token');
+}
+
 const helper = new JwtHelperService();
 
 @Injectable({
@@ -47,13 +51,13 @@ export class AuthService {
   }
 
   getUser(): User {
-    const token = localStorage.getItem('token');
+    const token = getToken();
 
     return helper.decodeToken(token).user;
   }
 
   isLoggedIn() {
-    const token = localStorage.getItem('token');
+    const token = getToken();
 
     return !helper.isTokenExpired(token);
   }

@@ -6,13 +6,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { getToken } from './auth.service';
 import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { LoginComponent } from './login/login.component';
-
-export function tokenGetter() {
-  return localStorage.getItem('token');
-}
 
 @NgModule({
   declarations: [
@@ -28,7 +25,7 @@ export function tokenGetter() {
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter: getToken,
         blacklistedRoutes: ['/auth/']
       }
     }),

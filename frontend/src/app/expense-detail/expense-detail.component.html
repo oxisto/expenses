@@ -13,6 +13,10 @@
       </div>
 
       <div class="form-group">
+        <input type="text" placeholder="Enter a comment" class="form-control" #amount="ngModel" [(ngModel)]="expense.comment" name="comment">
+      </div>
+
+      <div class="form-group">
         <select class="form-control" #accountID="ngModel" [(ngModel)]="expense.accountID" name="accountID">
           <option value="{{ user.id }}" *ngFor="let user of users" selected>{{ user.username }}</option>
         </select>

@@ -26,7 +26,7 @@ type Expense struct {
 	Amount float64 `json:"amount"`
 	// The currency
 	Currency string `json:"currency"`
-	// Optinal, a comment
+	// Optional, a comment
 	Comment string `json:"comment"`
 	// The time of the expense
 	Timestamp time.Time `json:"timestamp"`

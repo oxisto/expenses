@@ -33,7 +33,8 @@
             "command": "yarn start",
             "problemMatcher": [
                 "$tsc-watch"
-            ]
+            ],
+            "group": "build"
         }
     ]
 }
