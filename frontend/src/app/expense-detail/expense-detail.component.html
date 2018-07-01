@@ -23,9 +23,18 @@ limitations under the License.
   <div class="card-body">
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="form-group">
-        Amount
-        <input type="number" placeholder="Amount" class="form-control" #amount="ngModel" [(ngModel)]="expense.amount" name="amount"
-          required> {{ expense.currency }}
+        <div class="form-row">
+          <div class="col-9">
+            <input type="number" placeholder="Amount" class="form-control" #amount="ngModel" [(ngModel)]="expense.amount" name="amount"
+              required>
+          </div>
+          <div class="col-3">
+            <select class="form-control" #currency="ngModel" [(ngModel)]="expense.currency" name="currency">
+              <option selected>EUR</option>
+              <option>USD</option>
+            </select>
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
@@ -38,7 +47,7 @@ limitations under the License.
         </select>
       </div>
 
-      <button class="btn btn-secondary" type="submit" [disabled]="!loginForm.form.valid">Save</button>
+      <button class="btn btn-primary" type="submit" [disabled]="!loginForm.form.valid">Save</button>
     </form>
   </div>
 </div>
