@@ -30,13 +30,15 @@ import { ConfigService } from './config.service';
 import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { LoginComponent } from './login/login.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ExpenseListComponent,
     ExpenseDetailComponent,
-    LoginComponent
+    LoginComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,

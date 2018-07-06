@@ -14,7 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<a routerLink="/expenses">List of Expenses</a> | List of Categories |
+<a routerLink="/expenses">List of Expenses</a> |
+<a routerLink="/about">About</a> |
 <a href="#" (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
 
 <div *ngIf="authService.isLoggedIn()">
@@ -24,9 +25,3 @@ limitations under the License.
 <main>
     <router-outlet></router-outlet>
 </main>
-
-<footer class="footer">
-    <div class="container">
-        <span class="text-muted">Expenses - (c) 2018, Christian Banse - {{ configService.get().version }}</span>
-    </div>
-</footer>

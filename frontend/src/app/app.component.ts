@@ -17,7 +17,6 @@ limitations under the License.
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
-import { ConfigService } from './config.service';
 
 @Component({
   selector: 'app-root',
@@ -25,7 +24,7 @@ import { ConfigService } from './config.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(public authService: AuthService, public configService: ConfigService, private router: Router) { }
+  constructor(public authService: AuthService, private router: Router) { }
 
   title = 'app';
 

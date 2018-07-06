@@ -16,6 +16,7 @@ limitations under the License.
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AboutComponent } from './about/about.component';
 import { AuthGuard } from './auth.guard';
 import { ExpenseDetailComponent } from './expense-detail/expense-detail.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
@@ -40,6 +41,10 @@ const routes: Routes = [
     canActivate: [
       AuthGuard
     ]
+  },
+  {
+    path: 'about',
+    component: AboutComponent
   },
   {
     path: 'login',
