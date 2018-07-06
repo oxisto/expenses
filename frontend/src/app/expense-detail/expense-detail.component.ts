@@ -53,7 +53,7 @@ export class ExpenseDetailComponent implements OnInit {
         this.new = true;
 
         // set the account owner as default
-        this.expense = new Expense(null, null, user.id);
+        this.expense = new Expense(null, null, user.id, new Date());
       } else {
         this.expenseService.getExpense(id).subscribe(expense => {
           this.expense = expense;

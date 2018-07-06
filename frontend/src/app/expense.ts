@@ -1,3 +1,4 @@
+
 /*
 Copyright 2018 Christian Banse
 
@@ -19,6 +20,7 @@ export class Expense {
         public id: string,
         public amount: number,
         public accountID: string,
+        public timestamp: Date,
         public comment?: string,
         public currency: string = 'EUR') { }
 }
