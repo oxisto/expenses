@@ -23,4 +23,7 @@ export class Expense {
         public timestamp: Date,
         public comment?: string,
         public currency: string = 'EUR') { }
+
+    // true, if this expense only exists in local storage and is not yet synced to the server
+    public localStorage: Boolean = false;
 }

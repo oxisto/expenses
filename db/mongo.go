@@ -56,7 +56,7 @@ func FindExpenses(user User, collection string) (expenses []Expense, err error) 
 	expenses = []Expense{}
 
 	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
-	err = mongo.C(collection).Find(bson.M{"accountID": user.ID}).All(&expenses)
+	err = mongo.C(collection).Find(bson.M{"accountID": user.ID}).Sort("-timestamp").All(&expenses)
 
 	return
 }

@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Expense } from '../expense';
 import { ExpenseService } from '../expense.service';
 
@@ -23,13 +23,23 @@ import { ExpenseService } from '../expense.service';
   templateUrl: './expense-list.component.html',
   styleUrls: ['./expense-list.component.css']
 })
-export class ExpenseListComponent implements OnInit {
+export class ExpenseListComponent implements OnInit, AfterViewInit {
 
   expenses: Expense[];
 
   constructor(private expenseService: ExpenseService) { }
 
   ngOnInit() {
+    this.updateExpenses();
+  }
+
+  ngAfterViewInit() {
+    this.expenseService.syncOfflineExpenses().subscribe(() => {
+      this.updateExpenses();
+    });
+  }
+
+  updateExpenses() {
     this.expenseService.getExpenses()
       .subscribe(expenses => {
         this.expenses = expenses;

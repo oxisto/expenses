@@ -24,7 +24,7 @@ limitations under the License.
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let expense of expenses">
+    <tr [ngClass]="{'local': expense.localStorage }" *ngFor="let expense of expenses">
       <td>
         <a [routerLink]="['/expenses', expense.id]">{{ expense.amount | currency: expense.currency }}</a>
       </td>

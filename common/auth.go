@@ -20,7 +20,13 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
+	"crypto/x509"
+	"encoding/pem"
+	"errors"
+	"io/ioutil"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
@@ -28,11 +34,44 @@ import (
 	"github.com/oxisto/expenses/db"
 )
 
-var key *ecdsa.PrivateKey
+var (
+	log *logrus.Entry
+	key *ecdsa.PrivateKey
+)
 
 func init() {
-	// TODO: support loading the key from a file or Kubernetes secret
-	key, _ = ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	var err error
+
+	log = logrus.WithField("component", "common")
+
+	// check, if a private.pem is the current path
+	if key, err = loadKeyFromFile("private.pem"); err != nil {
+		log.Warnf("Could not read private key from file: %v", err)
+
+		log.Info("Generating new random private key...")
+		key, _ = ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	} else {
+		log.Info("Loaded private key from file..")
+	}
+
+}
+
+func loadKeyFromFile(filename string) (key *ecdsa.PrivateKey, err error) {
+	var (
+		b     []byte
+		block *pem.Block
+	)
+	if b, err = ioutil.ReadFile(filename); err != nil {
+		return nil, err
+	}
+
+	if block, _ = pem.Decode(b); block == nil {
+		return nil, errors.New("File contains invalid PEM structure")
+	}
+
+	key, err = x509.ParseECPrivateKey(block.Bytes)
+
+	return
 }
 
 func CreateMiddleware() *jwtmiddleware.JWTMiddleware {
