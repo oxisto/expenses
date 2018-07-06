@@ -1,4 +1,4 @@
-<!--
+/*
 Copyright 2018 Christian Banse
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,21 +12,7 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
--->
-
-<a routerLink="/expenses">List of Expenses</a> | List of Categories |
-<a href="#" (click)="logout()" *ngIf="authService.isLoggedIn()">Logout</a>
-
-<div *ngIf="authService.isLoggedIn()">
-    User: {{ authService.getUser().username }}
-</div>
-
-<main>
-    <router-outlet></router-outlet>
-</main>
-
-<footer class="footer">
-    <div class="container">
-        <span class="text-muted">Expenses - (c) 2018, Christian Banse - {{ configService.get().version }}</span>
-    </div>
-</footer>
+*/
+export class Config {
+    constructor(public version: string) { }
+}

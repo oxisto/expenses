@@ -11,6 +11,7 @@ jobs:
       - run:
           name: Build Docker image
           command: |
+            echo "{\"version\": \"${CIRCLE_SHA1:0:8}\"}" > frontend/src/assets/config.json
             docker build -t expenses .
       - deploy:
           name: Push Docker image
