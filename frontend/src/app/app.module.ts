@@ -18,9 +18,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { JwtModule } from '@auth0/angular-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MomentModule } from 'ngx-moment';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { getToken } from './auth.service';
@@ -47,7 +49,8 @@ import { LoginComponent } from './login/login.component';
         blacklistedRoutes: ['/auth/']
       }
     }),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
