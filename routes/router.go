@@ -42,7 +42,7 @@ func NewRouter() *mux.Router {
 	router.Methods("POST").Path("/api/expenses").Handler(WithMiddleware(middleware, PostExpense))
 	router.Methods("PUT").Path("/api/expenses/{expenseID}").Handler(WithMiddleware(middleware, PutExpense))
 	router.Methods("POST").Path("/auth/login").HandlerFunc(Login)
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist/frontend")))
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir("./frontend/dist")))
 
 	return router
 }
