@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AccountService } from '../account.service';
 import { Expense } from '../expense';
 import { ExpenseService } from '../expense.service';
+import { User } from '../user';
 
 @Component({
   selector: 'app-expense-list',
@@ -25,11 +27,15 @@ import { ExpenseService } from '../expense.service';
 })
 export class ExpenseListComponent implements OnInit, AfterViewInit {
 
+  users: User[];
   expenses: Expense[];
 
-  constructor(private expenseService: ExpenseService) { }
+  constructor(private expenseService: ExpenseService,
+    private accountService: AccountService) { }
 
   ngOnInit() {
+    this.accountService.getAccounts().subscribe(users => this.users = users);
+
     this.updateExpenses();
   }
 

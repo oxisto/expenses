@@ -30,7 +30,7 @@ limitations under the License.
       </td>
       <td>{{ expense.comment }}</td>
       <td>{{ expense.timestamp | amTimeAgo }}</td>
-      <td>{{ expense.accountID }}</td>
+      <td>{{ users[expense.accountID].username }}</td>
     </tr>
   </tbody>
 </table>

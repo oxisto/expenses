@@ -41,6 +41,15 @@
             "type": "shell",
             "command": "yarn install",
             "group": "build"
+        },
+        {
+            "label": "yarn: lint",
+            "type": "shell",
+            "command": "yarn lint",
+            "group": "build",
+            "problemMatcher": [
+                "$tslint5"
+            ]
         }
     ]
 }
