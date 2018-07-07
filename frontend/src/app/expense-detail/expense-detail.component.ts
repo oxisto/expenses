@@ -42,7 +42,7 @@ export class ExpenseDetailComponent implements OnInit {
     private expenseService: ExpenseService) { }
 
   async ngOnInit() {
-    this.accountService.getAccounts().subscribe(users => this.users = Object.values(users);
+    this.accountService.getAccounts().subscribe(users => this.users = Object.values(users));
 
     // default user
     const user = this.authService.getUser();
