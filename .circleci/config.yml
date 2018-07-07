@@ -26,6 +26,9 @@ jobs:
   deploy_kubernetes:
     docker:
       - image: circleci/python
+    branches:
+      only:
+        - master
     steps:
       - checkout
       - run:
