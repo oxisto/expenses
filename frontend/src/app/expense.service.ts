@@ -44,6 +44,13 @@ export class ExpenseService {
       );
   }
 
+  deleteExpense(id) {
+    return this.http.delete(EXPENSE_ENDPOINT + '/' + id)
+      .pipe(
+        catchError(this.authService.handleHttpError.bind(this.authService))
+      );
+  }
+
   postExpense(expense: Expense): Observable<Expense> {
     return this.http.post<Expense>(EXPENSE_ENDPOINT, expense)
       .pipe(

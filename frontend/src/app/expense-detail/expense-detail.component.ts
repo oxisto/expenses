@@ -90,6 +90,12 @@ export class ExpenseDetailComponent implements OnInit {
     this.expense.timestamp.setHours(this.time.hour);
   }
 
+  onDelete() {
+    this.expenseService.deleteExpense(this.expense.id).subscribe(() => {
+      this.router.navigateByUrl('/');
+    });
+  }
+
   onSubmit() {
     this.submitted = true;
 

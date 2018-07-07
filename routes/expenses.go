@@ -25,6 +25,33 @@ import (
 	"github.com/oxisto/expenses/db"
 )
 
+// DeleteExpense retrieves a single expense
+func DeleteExpense(w http.ResponseWriter, r *http.Request) {
+	var (
+		expenseID string
+		ok        bool
+	)
+
+	if expenseID, ok = mux.Vars(r)["expenseID"]; !ok {
+		common.JsonResponse(w, r, nil, nil)
+		return
+	}
+
+	user := r.Context().Value("user").(db.User)
+
+	expense, err := db.FindExpense(user, expenseID)
+
+	if err == db.ErrNotFound {
+		common.JsonResponse(w, r, nil, nil)
+
+		return
+	}
+
+	err = db.Delete(expense)
+
+	common.JsonResponse(w, r, "ok", err)
+}
+
 // GetExpense retrieves a single expense
 func GetExpense(w http.ResponseWriter, r *http.Request) {
 	var (

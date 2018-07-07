@@ -60,6 +60,7 @@ limitations under the License.
       <ngb-timepicker name="time" [(ngModel)]="time" required></ngb-timepicker>
 
       <button class="btn btn-primary" type="submit" [disabled]="!loginForm.form.valid">Save</button>
+      <button class="btn btn-danger" type="button" (click)="onDelete()" style="margin-left: 10px ">Delete</button>
     </form>
   </div>
 </div>

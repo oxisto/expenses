@@ -40,6 +40,7 @@ func NewRouter() *mux.Router {
 	router.Methods("GET").Path("/api/expenses").Handler(WithMiddleware(middleware, GetExpenses))
 	router.Methods("GET").Path("/api/expenses/{expenseID}").Handler(WithMiddleware(middleware, GetExpense))
 	router.Methods("POST").Path("/api/expenses").Handler(WithMiddleware(middleware, PostExpense))
+	router.Methods("DELETE").Path("/api/expenses/{expenseID}").Handler(WithMiddleware(middleware, DeleteExpense))
 	router.Methods("PUT").Path("/api/expenses/{expenseID}").Handler(WithMiddleware(middleware, PutExpense))
 	router.Methods("GET").Path("/api/accounts").Handler(WithMiddleware(middleware, GetAccounts))
 	router.Methods("POST").Path("/auth/login").HandlerFunc(Login)

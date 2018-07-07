@@ -127,6 +127,11 @@ func Find(query bson.M, object DBObject) (err error) {
 	return
 }
 
+// Delete deletes an object from the database
+func Delete(object DBObject) (err error) {
+	return mongo.C(object.Collection()).Remove(bson.M{"_id": object.Identifier()})
+}
+
 // Insert inserts one object into the database
 func Insert(object DBObject) (err error) {
 	return mongo.C(object.Collection()).Insert(&object)
