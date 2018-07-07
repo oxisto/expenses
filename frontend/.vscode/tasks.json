@@ -35,6 +35,12 @@
                 "$tsc-watch"
             ],
             "group": "build"
+        },
+        {
+            "label": "yarn: install",
+            "type": "shell",
+            "command": "yarn install",
+            "group": "build"
         }
     ]
 }

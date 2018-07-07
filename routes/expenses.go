@@ -75,8 +75,8 @@ func PostExpense(w http.ResponseWriter, r *http.Request) {
 	// create a new ID
 	expense.ID = db.NextID()
 
-	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
-	if expense.AccountID != user.ID {
+	// check permissions
+	if !user.CanAccess(expense) {
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
@@ -114,8 +114,8 @@ func PutExpense(w http.ResponseWriter, r *http.Request) {
 	// make sure, IDs match
 	expense.ID = expenseID
 
-	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
-	if expense.AccountID != user.ID {
+	// check permissions
+	if !user.CanAccess(expense) {
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}

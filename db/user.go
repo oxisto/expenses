@@ -19,9 +19,15 @@ package db
 const UsersCollectionName = "users"
 
 type User struct {
-	ID           string `json:"id" bson:"_id"`
-	Username     string `json:"username" bson:"username"`
-	PasswordHash string `json:"passwordHash,omitempty" bson: "passwordHash"`
+	ID           string       `json:"id" bson:"_id"`
+	Username     string       `json:"username" bson:"username"`
+	PasswordHash string       `json:"passwordHash,omitempty" bson:"passwordHash"`
+	Delegations  []Delegation `json:"delegations,omitempty" bson:"delegations"`
+}
+
+type Delegation struct {
+	AccountID   string `json:"accountId" bson:"accountId"`
+	AccountName string `json:"accountName" bson:"accountName"`
 }
 
 func (u User) Collection() string {
@@ -38,4 +44,12 @@ func NewUser(username string) User {
 		ID:       NextID(),
 		Username: username,
 	}
+}
+
+func (u User) CanAccess(expense Expense) bool {
+	userIDs := FindDelegatedAccounts(u)
+
+	_, ok := userIDs[expense.AccountID]
+
+	return ok
 }

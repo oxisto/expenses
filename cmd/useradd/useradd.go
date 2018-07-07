@@ -70,6 +70,45 @@ func main() {
 	user.PasswordHash = string(hash)
 
 	db.Upsert(user)
+
+	if useDelegation, delegation, err := GetDelegation(); useDelegation {
+		if err == nil {
+			user.Delegations = append(user.Delegations, delegation)
+
+			log.Infof("Allowing username %s (%s) to access your expenses.", delegation.AccountName, delegation.AccountID)
+		} else {
+			log.Errorf("Could not add delegation: %s", err)
+		}
+	}
+
+	db.Upsert(user)
+}
+
+func GetDelegation() (useDelegation bool, delegation db.Delegation, err error) {
+	var (
+		tmp  string
+		user db.User
+	)
+
+	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Print("Do you want to add delegation? ")
+	tmp, err = reader.ReadString('\n')
+
+	if strings.TrimSpace(tmp) == "y" {
+		useDelegation = true
+	}
+
+	if useDelegation {
+		fmt.Print("Enter Username: ")
+		tmp, err = reader.ReadString('\n')
+		delegation.AccountName = strings.TrimSpace(tmp)
+
+		err = db.Find(bson.M{"username": delegation.AccountName}, &user)
+		delegation.AccountID = user.ID
+	}
+
+	return
 }
 
 func GetCredentials() (username string, password string, err error) {

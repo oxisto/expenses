@@ -16,6 +16,7 @@ limitations under the License.
 
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { AccountService } from '../account.service';
 import { AuthService } from '../auth.service';
 import { Expense } from '../expense';
 import { ExpenseService } from '../expense.service';
@@ -37,14 +38,14 @@ export class ExpenseDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
+    private accountService: AccountService,
     private expenseService: ExpenseService) { }
 
-  ngOnInit() {
-    // for now, only push the current user, in the future, we want to support
-    // access to multiple accounts
-    const user = this.authService.getUser();
+  async ngOnInit() {
+    this.accountService.getAccounts().subscribe(users => this.users = Object.values(users);
 
-    this.users.push(user);
+    // default user
+    const user = this.authService.getUser();
 
     this.route.paramMap.forEach((params: ParamMap) => {
       const id = params.get('id');

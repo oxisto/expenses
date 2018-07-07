@@ -26,12 +26,11 @@ import (
 	"io/ioutil"
 	"time"
 
+	"github.com/oxisto/expenses/db"
 	"github.com/sirupsen/logrus"
 
 	"github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
-
-	"github.com/oxisto/expenses/db"
 )
 
 var (

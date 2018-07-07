@@ -1,5 +1,8 @@
 FROM node AS build-frontend
 
+# upgrade yarn
+RUN npm install -g yarn@1.8
+
 WORKDIR /tmp
 
 ADD frontend/*.json ./

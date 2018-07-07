@@ -51,19 +51,64 @@ func init() {
 	mongo = session.DB("expenses")
 }
 
+func GetUserIDsWithDelegation(user User) (userIDs []string) {
+	// add the own user ID
+	userIDs = append(userIDs, user.ID)
+
+	// get the list of IDs this user has access to
+	delegatedIDs, err := FindDistinctUsers(bson.M{"delegations.accountId": user.ID})
+
+	if err == nil || err == ErrNotFound {
+		// add the delegated IDs
+		userIDs = append(userIDs, delegatedIDs...)
+	}
+
+	return userIDs
+}
+
 // FindExpenses returns an array of all expenses
 func FindExpenses(user User, collection string) (expenses []Expense, err error) {
 	expenses = []Expense{}
 
-	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
-	err = mongo.C(collection).Find(bson.M{"accountID": user.ID}).Sort("-timestamp").All(&expenses)
+	userIDs := GetUserIDsWithDelegation(user)
+
+	// query all expenses that belong to those user IDs
+	err = mongo.C(collection).Find(bson.M{"accountID": bson.M{"$in": userIDs}}).Sort("-timestamp").All(&expenses)
+
+	return
+}
+
+func FindDistinctUsers(filter bson.M) (userIDs []string, err error) {
+	err = mongo.C("users").Find(filter).Distinct("_id", &userIDs)
+
+	return
+}
+
+func FindDelegatedAccounts(user User) (users map[string]User) {
+	var delegate User
+
+	users = make(map[string]User)
+
+	// add the user itself
+	users[user.ID] = user
+
+	query := mongo.C("users").Find(bson.M{"delegations.accountId": user.ID}).Select(bson.M{"_id": 1, "username": 1}).Iter()
+
+	for !query.Done() {
+		query.Next(&delegate)
+
+		if query.Err() == nil {
+			users[delegate.ID] = delegate
+		}
+	}
 
 	return
 }
 
 func FindExpense(user User, ID string) (expense Expense, err error) {
-	// TODO: support access to other accounts via delegation (https://github.com/oxisto/expenses/issues/4)
-	err = mongo.C(expense.Collection()).Find(bson.M{"_id": ID, "accountID": user.ID}).One(&expense)
+	userIDs := GetUserIDsWithDelegation(user)
+
+	err = mongo.C(expense.Collection()).Find(bson.M{"_id": ID, "accountID": bson.M{"$in": userIDs}}).One(&expense)
 
 	return
 }
