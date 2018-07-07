@@ -47,6 +47,18 @@ limitations under the License.
         </select>
       </div>
 
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+              <span class="oi oi-calendar"></span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <ngb-timepicker name="time" [(ngModel)]="time" required></ngb-timepicker>
+
       <button class="btn btn-primary" type="submit" [disabled]="!loginForm.form.valid">Save</button>
     </form>
   </div>
