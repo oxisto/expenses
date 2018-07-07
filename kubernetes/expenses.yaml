@@ -21,6 +21,9 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
+        volumeMounts:
+        - mountPath: /usr/share/expenses/private.pem
+          name: expenses-private-key
       - image: mongo
         name: mongo
         volumeMounts:
@@ -31,6 +34,10 @@ spec:
         hostPath:
           path: /srv/k8s/mongo
           type: Directory
+      - name: expenses-private-key
+        hostPath:
+          path: /srv/k8s/expenses-private.pem
+          type: File
       imagePullSecrets:
       - name: registry-secret
 ---
