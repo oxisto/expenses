@@ -14,7 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-<table class="table">
+<a routerLink="/expenses/new">
+  <button type="button" class="btn btn-primary">
+    <span class="oi oi-plus" title="plus" aria-hidden="true"></span>
+  </button>
+</a>
+<table class="table" style="margin-top: 10px">
   <thead>
     <tr>
       <th scope="col">Amount</th>
@@ -34,8 +39,3 @@ limitations under the License.
     </tr>
   </tbody>
 </table>
-<a routerLink="/expenses/new">
-  <button type="button" class="btn btn-primary">
-    <span class="oi oi-plus" title="plus" aria-hidden="true"></span>
-  </button>
-</a>
