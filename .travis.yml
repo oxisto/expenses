@@ -1,0 +1,11 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - cd frontend && yarn run greenkeeper-lockfile-update
+
+script:
+  - echo "{\"version\": \"${TRAVIS_COMMIT:0:8}\"}" > frontend/src/assets/config.json
+  - docker build -t expenses .
