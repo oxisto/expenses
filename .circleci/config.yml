@@ -9,10 +9,20 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - run:
+          name: Update greenkeeper lockfile
+          command: |
+            apk add --no-cache nodejs yarn
+            yarn global add greenkeeper-lockfile
+            cd frontent && greenkeeper-lockfile-update
+      - run:
           name: Build Docker image
           command: |
             echo "{\"version\": \"${CIRCLE_SHA1:0:8}\"}" > frontend/src/assets/config.json
             docker build -t expenses .
+      - run :
+          name: Upload greenkeeper lockfile
+          command: |
+            cd frontend && greenkeeper-lockfile-upload
       - deploy:
           name: Push Docker image
           command: |
@@ -46,7 +56,7 @@ workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - build:
+      - build:          
           context: org-global
       - deploy_kubernetes:
           filters:
