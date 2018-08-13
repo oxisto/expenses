@@ -21,7 +21,7 @@
     "@angular/router": "^6.1.1",
     "@angular/service-worker": "^6.1.1",
     "@auth0/angular-jwt": "^2.0.0",
-    "@ng-bootstrap/ng-bootstrap": "^2.1.1",
+    "@ng-bootstrap/ng-bootstrap": "^3.0.0",
     "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
     "bootstrap": "^4.1.1",
     "core-js": "^2.5.4",
@@ -38,7 +38,6 @@
     "@angular/language-service": "^6.1.1",
     "@types/node": "~10.5.2",
     "codelyzer": "~4.4.2",
-    "greenkeeper-lockfile": "^1.15.1",
     "ts-node": "~7.0.0",
     "tslint": "~5.10.0",
     "typescript": "2.9.2"
