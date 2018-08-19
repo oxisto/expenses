@@ -13,7 +13,8 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "dependsOn": "yarn: lint"
         },
         {
             "label": "yarn: build (production)",
@@ -25,7 +26,8 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "dependsOn": "yarn: lint"
         },
         {
             "label": "yarn: start",
@@ -34,7 +36,8 @@
             "problemMatcher": [
                 "$tsc-watch"
             ],
-            "group": "build"
+            "group": "build",
+            "dependsOn": "yarn: lint"
         },
         {
             "label": "yarn: install",

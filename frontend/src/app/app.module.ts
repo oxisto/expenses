@@ -52,7 +52,7 @@ import { AboutComponent } from './about/about.component';
         blacklistedRoutes: ['/auth/']
       }
     }),
-    NgbModule.forRoot(),
+    NgbModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

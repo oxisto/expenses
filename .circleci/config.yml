@@ -18,7 +18,7 @@ jobs:
           name: Build Docker image
           command: |
             echo "{\"version\": \"${CIRCLE_SHA1:0:8}\"}" > frontend/src/assets/config.json
-            docker build -t expenses .
+            docker build --pull -t expenses .
       - run :
           name: Upload greenkeeper lockfile
           command: |

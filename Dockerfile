@@ -1,8 +1,5 @@
 FROM node AS build-frontend
 
-# upgrade yarn
-RUN npm install -g yarn@1.8
-
 WORKDIR /tmp
 
 ADD frontend/*.json ./
@@ -11,7 +8,7 @@ RUN yarn install
 
 ADD frontend/. .
 RUN yarn run lint
-RUN yarn run build --prod
+RUN yarn run build --prod --no-progress
 
 FROM golang AS build-server
 
