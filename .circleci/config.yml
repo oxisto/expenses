@@ -22,6 +22,8 @@ jobs:
       - run :
           name: Upload greenkeeper lockfile
           command: |
+            git config --global user.email "oxisto@aybaze.com"
+            git config --global user.name "Christian Banse"
             cd frontend && greenkeeper-lockfile-upload
       - deploy:
           name: Push Docker image
