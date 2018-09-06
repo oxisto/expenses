@@ -97,12 +97,28 @@
     rxjs "^6.0.0"
     source-map "^0.5.6"
 
+"@angular-devkit/core@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-0.8.0.tgz#d31c26677f7d5302e279946823933bbc95049e56"
+  dependencies:
+    ajv "~6.4.0"
+    chokidar "^2.0.3"
+    rxjs "~6.2.0"
+    source-map "^0.5.6"
+
 "@angular-devkit/schematics@0.7.2":
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.7.2.tgz#809d62a264265cf345228aabead42695aa96dc64"
   dependencies:
     "@angular-devkit/core" "0.7.2"
     rxjs "^6.0.0"
+
+"@angular-devkit/schematics@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-0.8.0.tgz#6f24dc1d51b548580e1300d18c3cfb53e9a07ece"
+  dependencies:
+    "@angular-devkit/core" "0.8.0"
+    rxjs "~6.2.0"
 
 "@angular-devkit/schematics@^0.5.4":
   version "0.5.13"
@@ -187,13 +203,13 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/pwa@^0.7.0":
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-0.7.2.tgz#a30655517abf3162c5f06ed86716f38e0ab90c6d"
+"@angular/pwa@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-0.8.0.tgz#65cf255837c197e7c0aa5d4f19a627dc9027cc5f"
   dependencies:
-    "@angular-devkit/core" "0.7.2"
-    "@angular-devkit/schematics" "0.7.2"
-    "@schematics/angular" "0.7.2"
+    "@angular-devkit/core" "0.8.0"
+    "@angular-devkit/schematics" "0.8.0"
+    "@schematics/angular" "0.8.0"
     typescript "~2.6.2"
 
 "@angular/router@^6.1.1":
@@ -244,6 +260,14 @@
     "@angular-devkit/core" "0.7.2"
     "@angular-devkit/schematics" "0.7.2"
     typescript ">=2.6.2 <2.8"
+
+"@schematics/angular@0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-0.8.0.tgz#cc7a6b4c03746befd6252f981c771a5ff4ef1f73"
+  dependencies:
+    "@angular-devkit/core" "0.8.0"
+    "@angular-devkit/schematics" "0.8.0"
+    typescript ">=2.6.2 <2.10"
 
 "@schematics/update@0.7.2":
   version "0.7.2"
@@ -4501,7 +4525,7 @@ rxjs@^6.0.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^6.2.2:
+rxjs@^6.2.2, rxjs@~6.2.0:
   version "6.2.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.2.2.tgz#eb75fa3c186ff5289907d06483a77884586e1cf9"
   dependencies:
@@ -5260,7 +5284,7 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript@2.9.2, typescript@~2.9.1:
+typescript@2.9.2, "typescript@>=2.6.2 <2.10", typescript@~2.9.1:
   version "2.9.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
 
