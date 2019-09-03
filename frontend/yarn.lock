@@ -245,10 +245,10 @@
   dependencies:
     url "^0.11.0"
 
-"@ng-bootstrap/ng-bootstrap@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-5.0.0.tgz#93abf17b9d10680ca89b9dae3d50113df6f0fa3e"
-  integrity sha512-B3jLrJ2Fm6cP3IghG9PJQQw0J8BDXx1zh2XFHmm3S1K19UXKQTtL8Ta0TMfjSsIHqEeZmQ1gtlMBGk/+ucbYzg==
+"@ng-bootstrap/ng-bootstrap@^5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-5.1.1.tgz#513d7e1e2ee3aca233e82b5dc934f48a0417a00b"
+  integrity sha512-k0OGMMxiEalrTo82XY3BNDg0pbJerrvsM79ey41sN6ex0QVMcR23211SAO9mekL8oQqqHcPw9mYN1YgC4jLEJA==
   dependencies:
     tslib "^1.9.0"
 
