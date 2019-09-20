@@ -32,7 +32,7 @@ spec:
       volumes:
       - name: mongo-data
         hostPath:
-          path: /srv/k8s/mongo
+          path: /srv/k8s/expenses-mongo
           type: Directory
       - name: expenses-private-key
         hostPath:
