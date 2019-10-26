@@ -6,6 +6,7 @@ jobs:
     working_directory: /expenses
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           name: Update greenkeeper lockfile
           command: |
