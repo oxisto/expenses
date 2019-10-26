@@ -38,8 +38,6 @@ spec:
         hostPath:
           path: /srv/k8s/expenses-private.pem
           type: File
-      imagePullSecrets:
-      - name: registry-secret
 ---
 apiVersion: v1
 kind: Service
